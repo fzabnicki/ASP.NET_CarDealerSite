@@ -1,0 +1,30 @@
+﻿@model Cars
+<h1>Add new Car</h1>
+<form method="post" asp-action="Create">
+    <div class="mb-3">
+        <label asp-for="Brand" class="form-label"></label>
+        <input asp-for="Brand" class="form-control" placeholder="">
+    </div>
+    <div class="mb-3">
+        <label asp-for="Model" class="form-label"></label>
+        <input asp-for="Model" class="form-control" placeholder="">
+    </div>
+    <div class="mb-3">
+        <label asp-for="ProductionDate" class="form-label"></label>
+        <input type="date" asp-for="ProductionDate" class="form-control" placeholder="">
+    </div>
+    <div class="mb-3">
+        <label asp-for="Price" class="form-label"></label>
+        <input asp-for="Price" class="form-control" placeholder="">
+    </div>
+    <div class="form-group row">
+        <div class="col-8 offset-2 row">
+            <div class="col">
+                <input type="submit" class="btn btn-info w-75" value="create" />
+            </div>
+            <div class="col">
+                <a asp-action="Index" class="btn btn-danger w-75">Back</a>
+            </div>
+        </div>
+    </div>
+</form>

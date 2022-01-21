@@ -10,8 +10,6 @@ using System.Threading.Tasks;
 
 namespace ASP.NET_Car.API_Logic
 {
-    [ApiController]
-    [Route("api/[controller]")]
     public class CarController : Controller
     {
         private readonly ICarsLogic _carsLogic;
@@ -19,30 +17,41 @@ namespace ASP.NET_Car.API_Logic
         {
             _carsLogic = carsLogic;
         }
-        [HttpGet]
+
+        #region Views
+        public IActionResult Index()
+        {
+            //ViewBag.ListOfCars = GetCarsAsync();
+            return View();
+        }
+
+        public IActionResult AddCar()
+        {
+            return View();
+        }
+        #endregion
+
+        #region ApiMethods
         public async Task<List<CarsDto>> GetCarsAsync()
         {
             return await _carsLogic.GetCarsAsync();
         }
-        [HttpGet("{id}")]
         public async Task<CarsDto> GetCarAsync(int id)
         {
             return await _carsLogic.GetCarAsync(id);
         }
-        [HttpPost]
         public async Task AddNewCarAsync(CarsDto car)
         {
             await _carsLogic.AddNewCarAsync(car);
         }
-        [HttpPut]
         public async Task EditCarAsync(CarsDto car)
         {
             await _carsLogic.EditCarAsync(car);
         }
-        [HttpDelete]
         public async Task DeleteCarAsync(int id)
         {
             await _carsLogic.DeleteCarAsync(id);
         }
+        #endregion
     }
 }
