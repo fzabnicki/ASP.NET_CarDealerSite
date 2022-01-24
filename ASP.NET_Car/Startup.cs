@@ -1,7 +1,6 @@
 using ASP.NET_Car.Interfaces;
-using ASP.NET_Car.Logic;
 using ASP.NET_Car.Models;
-using ASP.NET_Car.Mapper;
+using ASP.NET_Car.Repository;
 using AutoMapper;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -28,15 +27,9 @@ namespace ASP.NET_Car
             services.AddControllers();
             services.AddControllersWithViews();
             services.AddDbContext<DataContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
-            var mappingConfig = new MapperConfiguration(mc =>
-            {
-                mc.AddProfile(new MappingProfile());
-            });
-            IMapper mapper = mappingConfig.CreateMapper();
-            services.AddSingleton(mapper);
-            services.AddScoped<ICarsLogic, CarsLogic>();
-
-            services.AddCors();
+            services.AddTransient<IUserRepository,UserRepository>();
+            services.AddTransient<ICarRepository,CarRepository>();
+            services.AddTransient<IShoppingCartRepository,ShoppingCartRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

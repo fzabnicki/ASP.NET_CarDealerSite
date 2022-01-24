@@ -1,0 +1,15 @@
+﻿@{ 
+    var car = ViewBag.CarToBeDeleted;
+}
+<div>
+    <div class="jumbotron jumbotron-fluid">
+        <div class="container">
+            <h1 class="display-4">Remove car</h1>
+            <p class="lead">Brand: @car.Brand </p>
+            <p class="lead">Model: @car.Model</p>
+            <p class="lead">Price: @car.Price</p>
+            <p class="lead">Year of production: @car.ProductionDate</p>
+        </div>
+    </div>
+    <a asp-controller="Car" asp-action="DeleteCar" asp-route-Id="@car.ID" class="btn btn-danger">Confirm To Remove</a>
+</div>

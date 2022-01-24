@@ -4,14 +4,16 @@ using ASP.NET_Car.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace ASP.NET_Car.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20220122211316_CreateUser")]
+    partial class CreateUser
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -40,29 +42,9 @@ namespace ASP.NET_Car.Migrations
                     b.Property<DateTime>("ProductionDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<int?>("ShoppingCartID")
-                        .HasColumnType("int");
-
                     b.HasKey("ID");
-
-                    b.HasIndex("ShoppingCartID");
 
                     b.ToTable("Cars");
-                });
-
-            modelBuilder.Entity("ASP.NET_Car.Models.ShoppingCart", b =>
-                {
-                    b.Property<int>("ID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<decimal>("Value")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.HasKey("ID");
-
-                    b.ToTable("ShoppingCart");
                 });
 
             modelBuilder.Entity("ASP.NET_Car.Models.User", b =>
@@ -76,46 +58,16 @@ namespace ASP.NET_Car.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<bool>("IsLoggedIn")
-                        .HasColumnType("bit");
-
                     b.Property<string>("Password")
                         .IsRequired()
-                        .HasMaxLength(255)
-                        .HasColumnType("nvarchar(255)");
-
-                    b.Property<int?>("ShoppingCartID")
-                        .HasColumnType("int");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("UserRole")
                         .HasColumnType("int");
 
                     b.HasKey("ID");
 
-                    b.HasIndex("ShoppingCartID");
-
                     b.ToTable("Users");
-                });
-
-            modelBuilder.Entity("ASP.NET_Car.Models.Cars", b =>
-                {
-                    b.HasOne("ASP.NET_Car.Models.ShoppingCart", null)
-                        .WithMany("ShoppingList")
-                        .HasForeignKey("ShoppingCartID");
-                });
-
-            modelBuilder.Entity("ASP.NET_Car.Models.User", b =>
-                {
-                    b.HasOne("ASP.NET_Car.Models.ShoppingCart", "ShoppingCart")
-                        .WithMany()
-                        .HasForeignKey("ShoppingCartID");
-
-                    b.Navigation("ShoppingCart");
-                });
-
-            modelBuilder.Entity("ASP.NET_Car.Models.ShoppingCart", b =>
-                {
-                    b.Navigation("ShoppingList");
                 });
 #pragma warning restore 612, 618
         }

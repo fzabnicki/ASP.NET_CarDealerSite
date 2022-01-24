@@ -13,6 +13,8 @@ namespace ASP.NET_Car.Models
         }
 
         public DbSet<Cars> Cars { get; set; }
+        public DbSet<User> Users { get; set; }
+        public DbSet<ShoppingCart> ShoppingCart { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

@@ -1,56 +1,61 @@
-﻿using ASP.NET_Car.DtoModels;
-using ASP.NET_Car.Interfaces;
+﻿using ASP.NET_Car.Interfaces;
 using ASP.NET_Car.Models;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace ASP.NET_Car.API_Logic
 {
     public class CarController : Controller
     {
-        private readonly ICarsLogic _carsLogic;
-        public CarController(ICarsLogic carsLogic)
+        private readonly ICarRepository _context;
+        public CarController(ICarRepository context)
         {
-            _carsLogic = carsLogic;
+            _context = context;
         }
 
         #region Views
         public IActionResult Index()
         {
-            //ViewBag.ListOfCars = GetCarsAsync();
+            ViewBag.ListOfCars = _context.GetCars();
             return View();
         }
-
         public IActionResult AddCar()
         {
             return View();
         }
+        public IActionResult Edit(int? id)
+        {
+            var car = _context.GetCar(id);
+            ViewBag.Car = car;
+            return View();
+        }
+        public IActionResult Delete(int? id)
+        {
+            var car = _context.GetCar(id);
+            ViewBag.CarToBeDeleted = car;
+            return View();
+        }
         #endregion
-
-        #region ApiMethods
-        public async Task<List<CarsDto>> GetCarsAsync()
+        #region Methods
+        [HttpPost]
+        public IActionResult AddCar(Cars car)
         {
-            return await _carsLogic.GetCarsAsync();
+            if (ModelState.IsValid)
+            {
+                _context.AddCar(car);
+                return RedirectToAction("Index");
+            }
+            return View(car);
         }
-        public async Task<CarsDto> GetCarAsync(int id)
+        public IActionResult DeleteCar(int id)
         {
-            return await _carsLogic.GetCarAsync(id);
+            _context.DeleteCar(id);
+            return RedirectToAction("Index");
         }
-        public async Task AddNewCarAsync(CarsDto car)
+        [HttpPost]
+        public IActionResult EditCar(Cars car)
         {
-            await _carsLogic.AddNewCarAsync(car);
-        }
-        public async Task EditCarAsync(CarsDto car)
-        {
-            await _carsLogic.EditCarAsync(car);
-        }
-        public async Task DeleteCarAsync(int id)
-        {
-            await _carsLogic.DeleteCarAsync(id);
+            _context.EditCar(car);
+            return RedirectToAction("Index");
         }
         #endregion
     }

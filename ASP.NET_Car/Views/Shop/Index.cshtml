@@ -1,5 +1,11 @@
-﻿<div>
-    <a asp-controller="Car" asp-action="AddCar" class="btn btn-primary">Add Car</a>
+﻿<h3>Welcome to Car Dealer shop, please choose car you are willing to buy.</h3>
+<div>
+    <a asp-controller="Shop" asp-action="ShoppingCart" class="btn btn-primary float-right">
+        Shopping Cart @if (ViewBag.Cart > 0)
+        {
+            <div>(@ViewBag.Cart)</div>
+        }
+    </a>
     <div>
         <ul class="list-group">
             @if (ViewBag.ListOfCars != null)
@@ -21,10 +27,7 @@
                                 Price: @item.Price
                             </div>
                         </div>
-                        <div class="float-right">
-                            <a asp-controller="Car" asp-action="Delete" asp-route-Id="@item.ID" class="btn btn-danger float-right ml-1">Delete car</a>
-                            <a asp-controller="Car" asp-action="Edit" asp-route-Id="@item.ID" class="btn btn-secondary float-right">Edit car</a>
-                        </div>
+                        <button asp-controller="Shop" asp-action="Buy" class="btn btn-danger float-right ml-1">Buy Car</button>
                     </li>
                 }
             }
