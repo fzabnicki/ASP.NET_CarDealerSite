@@ -11,25 +11,42 @@ namespace ASP.NET_Car.Controllers
     public class ShopController : Controller
     {
         private readonly ICarRepository _context;
-        int counter = 0;
-        public ShopController(ICarRepository context)
+        private readonly IShoppingCartRepository _shopContext;
+        private readonly IUserRepository _userContext;
+        public ShopController(ICarRepository context, IShoppingCartRepository shopContext, IUserRepository userContext)
         {
             _context = context;
+            _shopContext = shopContext;
+            _userContext = userContext;
         }
-        public IActionResult Index()
+        public IActionResult Index(User loggedIn)
         {
-            ViewBag.Cart = counter;
+            ViewBag.User = loggedIn;
+            if(loggedIn.ShoppingCart != null)
+                ViewBag.Cart = loggedIn.ShoppingCart.ShoppingList.Count;
             ViewBag.ListOfCars = _context.GetCars();
             return View();
         }
-        public IActionResult ShoppingCart()
+        public IActionResult ShoppingCart(int id)
         {
+            var user = _userContext.Find(id);
+            ViewBag.User = user;
+            ViewBag.Bucket = user.ShoppingCart.ShoppingList;
             return View();
         }
-        public IActionResult Buy()
+        public IActionResult Buy(int? id, int userID)
         {
-            counter++;
-            return View("Index");
+            var car = _context.GetCar(id);
+            ViewBag.Car = car;
+            ViewBag.User = _userContext.Find(userID);
+            return View();
+        }
+
+        public IActionResult AddCarToShoppingCart(int? id,int userID)
+        {
+            _shopContext.AddToBucket(userID, id);
+            var user = _userContext.Find(userID);
+            return RedirectToAction("Index", user);
         }
     }
 }

@@ -1,6 +1,6 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace CarDealerTests
+namespace UnitTests
 {
     [TestClass]
     public class UnitTest1

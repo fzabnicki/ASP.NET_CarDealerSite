@@ -1,6 +1,9 @@
-﻿<h3>Welcome to Car Dealer shop, please choose car you are willing to buy.</h3>
+﻿@{ 
+    var user = ViewBag.User;
+}
+<h3>Welcome @user.Email to Car Dealer shop, please choose car you are willing to buy.</h3>
 <div>
-    <a asp-controller="Shop" asp-action="ShoppingCart" class="btn btn-primary float-right">
+    <a asp-controller="Shop" asp-action="ShoppingCart" asp-route-userID="@user.ID" class="btn btn-primary float-right">
         Shopping Cart @if (ViewBag.Cart > 0)
         {
             <div>(@ViewBag.Cart)</div>
@@ -27,7 +30,7 @@
                                 Price: @item.Price
                             </div>
                         </div>
-                        <button asp-controller="Shop" asp-action="Buy" class="btn btn-danger float-right ml-1">Buy Car</button>
+                        <a asp-controller="Shop" asp-action="Buy" asp-route-Id="@item.ID" asp-route-userID="@user.ID" class="btn btn-danger float-right ml-1">Buy Car</a>
                     </li>
                 }
             }

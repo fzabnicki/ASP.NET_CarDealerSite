@@ -54,7 +54,7 @@ namespace ASP.NET_Car.Controllers
             }
             if (result.UserRole == UserRole.User)
             {
-                return RedirectToAction("Index", "Shop");
+                return RedirectToAction("Index", "Shop", result);
             }
             return BadRequest();
         }

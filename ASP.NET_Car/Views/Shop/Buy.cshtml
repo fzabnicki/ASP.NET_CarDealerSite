@@ -1,0 +1,17 @@
+﻿@{ 
+    var car = ViewBag.Car;
+    var user = ViewBag.User;
+}
+<div>
+    <div class="jumbotron jumbotron-fluid">
+        <div class="container">
+            <h1 class="display-4">Buy car</h1>
+            <p class="lead">Brand: @car.Brand </p>
+            <p class="lead">Model: @car.Model</p>
+            <p class="lead">Price: @car.Price</p>
+            <p class="lead">Year of production: @car.ProductionDate</p>
+            <p class="lead">@user.Email</p>
+        </div>
+    </div>
+    <a asp-controller="Shop" asp-action="AddCarToShoppingCart" asp-route-Id="@car.ID" asp-route-userID="@user.ID" class="btn btn-success">Confirm to add car to shoppingcart</a>
+</div>

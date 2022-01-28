@@ -18,10 +18,14 @@ namespace ASP.NET_Car.Repository
             _carContext = carContext;
             _userContext = userContext;
         }
-        public Cars AddToBucket(int userID, int carID)
+        public Cars AddToBucket(int userID, int? carID)
         {
             var user = _userContext.Find(userID);
             var car = _carContext.GetCar(carID);
+            if (user.ShoppingCart == null)
+            {
+                user.ShoppingCart = new ShoppingCart();
+            }
             user.ShoppingCart.ShoppingList.Add(car);
             _context.SaveChanges();
             return car;

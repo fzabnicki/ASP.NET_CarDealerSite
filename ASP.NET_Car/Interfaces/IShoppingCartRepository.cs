@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace ASP.NET_Car.Interfaces
 {
-    interface IShoppingCartRepository
+    public interface IShoppingCartRepository
     {
-        Cars AddToBucket(int userID, int carID);
+        Cars AddToBucket(int userID, int? carID);
         void RemoveFromBucket(int userID, int carID);
         void ClearBucket(int userID);
     }
